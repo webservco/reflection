@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\WebServCo\Reflection\Service;
 
 use OutOfBoundsException;
+use OutOfRangeException;
 use PDO;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
@@ -72,6 +73,35 @@ final class ReflectionServiceTest extends TestCase
         assert($this->reflectionService instanceof ReflectionServiceInterface);
 
         $this->reflectionService->getConstructorParameterAtIndex(self::CLASS_NAME, 4);
+    }
+
+    public function testConstructorParameterReflectionClassAtIndex1(): void
+    {
+        assert($this->reflectionService instanceof ReflectionServiceInterface);
+
+        $reflectionClass = $this->reflectionService->getConstructorParameterReflectionClassAtIndex(self::CLASS_NAME, 1);
+
+        self::assertEquals(MockDependency::class, $reflectionClass->getName());
+    }
+
+    public function testConstructorParameterReflectionClassAtIndex2(): void
+    {
+        assert($this->reflectionService instanceof ReflectionServiceInterface);
+
+        $reflectionClass = $this->reflectionService->getConstructorParameterReflectionClassAtIndex(self::CLASS_NAME, 2);
+
+        self::assertEquals(PDO::class, $reflectionClass->getName());
+    }
+
+    public function testConstructorParameterReflectionClassAtIndex3(): void
+    {
+        // Param 3 is a string and not a class.
+
+        $this->expectException(OutOfRangeException::class);
+
+        assert($this->reflectionService instanceof ReflectionServiceInterface);
+
+        $this->reflectionService->getConstructorParameterReflectionClassAtIndex(self::CLASS_NAME, 3);
     }
 
     public function testConstructorParameterTypeAtIndex1(): void
