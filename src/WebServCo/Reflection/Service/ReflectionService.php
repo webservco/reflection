@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Reflection\Service;
 
 use OutOfBoundsException;
+use OutOfRangeException;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
@@ -14,6 +15,7 @@ use WebServCo\Reflection\Contract\ReflectionClassFactoryInterface;
 use WebServCo\Reflection\Contract\ReflectionServiceInterface;
 
 use function array_key_exists;
+use function class_exists;
 
 /**
  * Reflection service.
@@ -63,6 +65,10 @@ final class ReflectionService implements ReflectionServiceInterface
     public function getConstructorParameterReflectionClassAtIndex(string $className, int $index): ReflectionClass
     {
         $constructorParameterType = $this->getConstructorParameterTypeAtIndex($className, $index);
+
+        if (!class_exists($constructorParameterType)) {
+            throw new OutOfRangeException('Class does not exist or is not a class.');
+        }
 
         return $this->getReflectionClass($constructorParameterType);
     }
