@@ -23,7 +23,7 @@
         "webservco"
     ],
     "license" : "MIT",
-    "name" : "webservco/component-skeleton",
+    "name" : "webservco/reflection",
     "require-dev": {
         "pds/skeleton": "^1",
         "phan/phan": "^5",
