@@ -23,20 +23,17 @@ use function array_key_exists;
 final class ReflectionService implements ReflectionServiceInterface
 {
     /**
-     * @var \ReflectionClass<object>
+     * @var array<string,\ReflectionClass<object>>
      */
-    private ReflectionClass $reflectionClass;
+    private array $reflectionClasses = [];
 
-    public function __construct(
-        private string $className,
-        private ReflectionClassFactoryInterface $reflectionClassFactory,
-    ) {
-        $this->reflectionClass = $this->reflectionClassFactory->createReflectionClass($this->className);
+    public function __construct(private ReflectionClassFactoryInterface $reflectionClassFactory)
+    {
     }
 
-    public function getConstructor(): ReflectionMethod
+    public function getConstructor(string $className): ReflectionMethod
     {
-        $constructor = $this->reflectionClass->getConstructor();
+        $constructor = $this->getReflectionClass($className)->getConstructor();
         if (!$constructor instanceof ReflectionMethod) {
             throw new UnexpectedValueException('Invalid instance.');
         }
@@ -44,9 +41,9 @@ final class ReflectionService implements ReflectionServiceInterface
         return $constructor;
     }
 
-    public function getConstructorParameterAtIndex(int $index): ReflectionParameter
+    public function getConstructorParameterAtIndex(string $className, int $index): ReflectionParameter
     {
-        $constructor = $this->getConstructor();
+        $constructor = $this->getConstructor($className);
 
         $parameters = $constructor->getParameters();
 
@@ -63,21 +60,33 @@ final class ReflectionService implements ReflectionServiceInterface
     /**
      * @return \ReflectionClass<object>
      */
-    public function getConstructorParameterReflectionClassAtIndex(int $index): ReflectionClass
+    public function getConstructorParameterReflectionClassAtIndex(string $className, int $index): ReflectionClass
     {
-        $constructorParameterType = $this->getConstructorParameterTypeAtIndex($index);
+        $constructorParameterType = $this->getConstructorParameterTypeAtIndex($className, $index);
 
-        return $this->reflectionClassFactory->createReflectionClass($constructorParameterType);
+        return $this->getReflectionClass($constructorParameterType);
     }
 
-    public function getConstructorParameterTypeAtIndex(int $index): string
+    public function getConstructorParameterTypeAtIndex(string $className, int $index): string
     {
-        $reflectionParameter = $this->getConstructorParameterAtIndex($index);
+        $reflectionParameter = $this->getConstructorParameterAtIndex($className, $index);
         $reflectionType = $reflectionParameter->getType();
         if (!$reflectionType instanceof ReflectionNamedType) {
             throw new UnexpectedValueException('Invalid instance.');
         }
 
         return $reflectionType->getName();
+    }
+
+    /**
+     * @return \ReflectionClass<object>
+     */
+    public function getReflectionClass(string $className): ReflectionClass
+    {
+        if (!array_key_exists($className, $this->reflectionClasses)) {
+            $this->reflectionClasses[$className] = $this->reflectionClassFactory->createReflectionClass($className);
+        }
+
+        return $this->reflectionClasses[$className];
     }
 }

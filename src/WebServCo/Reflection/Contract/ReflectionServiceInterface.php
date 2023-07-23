@@ -10,14 +10,19 @@ use ReflectionParameter;
 
 interface ReflectionServiceInterface
 {
-    public function getConstructor(): ReflectionMethod;
+    public function getConstructor(string $className): ReflectionMethod;
 
-    public function getConstructorParameterAtIndex(int $index): ReflectionParameter;
+    public function getConstructorParameterAtIndex(string $className, int $index): ReflectionParameter;
 
     /**
      * @return \ReflectionClass<object>
      */
-    public function getConstructorParameterReflectionClassAtIndex(int $index): ReflectionClass;
+    public function getConstructorParameterReflectionClassAtIndex(string $className, int $index): ReflectionClass;
 
-    public function getConstructorParameterTypeAtIndex(int $index): string;
+    public function getConstructorParameterTypeAtIndex(string $className, int $index): string;
+
+    /**
+     * @return \ReflectionClass<object>
+     */
+    public function getReflectionClass(string $className): ReflectionClass;
 }
