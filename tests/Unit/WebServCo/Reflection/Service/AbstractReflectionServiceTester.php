@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\WebServCo\Reflection\Service;
 
 use PHPUnit\Framework\TestCase;
+use Tests\Unit\Mock\MockController;
 use WebServCo\Reflection\Contract\ReflectionServiceInterface;
 use WebServCo\Reflection\Factory\ReflectionClassFactory;
 use WebServCo\Reflection\Service\ReflectionService;

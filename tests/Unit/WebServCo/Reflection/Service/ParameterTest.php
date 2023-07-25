@@ -9,6 +9,7 @@ use OutOfRangeException;
 use PDO;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
+use Tests\Unit\Mock\MockDependency;
 use WebServCo\Reflection\Contract\ReflectionServiceInterface;
 use WebServCo\Reflection\Factory\ReflectionClassFactory;
 use WebServCo\Reflection\Service\ReflectionService;

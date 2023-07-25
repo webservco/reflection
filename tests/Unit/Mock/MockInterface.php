@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\WebServCo\Reflection\Service;
+namespace Tests\Unit\Mock;
 
 interface MockInterface
 {

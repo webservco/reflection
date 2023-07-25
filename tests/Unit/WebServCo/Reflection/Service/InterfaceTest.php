@@ -6,6 +6,7 @@ namespace Tests\Unit\WebServCo\Reflection\Service;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
+use Tests\Unit\Mock\MockInterface;
 use WebServCo\Reflection\Contract\ReflectionServiceInterface;
 use WebServCo\Reflection\Factory\ReflectionClassFactory;
 use WebServCo\Reflection\Service\ReflectionService;
