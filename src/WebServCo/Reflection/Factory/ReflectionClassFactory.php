@@ -9,6 +9,7 @@ use ReflectionClass;
 use WebServCo\Reflection\Contract\ReflectionClassFactoryInterface;
 
 use function class_exists;
+use function interface_exists;
 
 final class ReflectionClassFactory implements ReflectionClassFactoryInterface
 {
@@ -17,8 +18,9 @@ final class ReflectionClassFactory implements ReflectionClassFactoryInterface
      */
     public function createReflectionClass(string $className): ReflectionClass
     {
-        if (!class_exists($className, true)) {
-            throw new OutOfRangeException('Class does not exist.');
+        if (!class_exists($className, true) && !interface_exists($className, true)) {
+            // Not class nor interface
+            throw new OutOfRangeException('Class or interface has not been defined.');
         }
 
         return new ReflectionClass($className);
