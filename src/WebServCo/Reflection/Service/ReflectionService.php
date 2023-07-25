@@ -16,6 +16,7 @@ use WebServCo\Reflection\Contract\ReflectionServiceInterface;
 
 use function array_key_exists;
 use function class_exists;
+use function interface_exists;
 
 /**
  * Reflection service.
@@ -66,8 +67,9 @@ final class ReflectionService implements ReflectionServiceInterface
     {
         $constructorParameterType = $this->getConstructorParameterTypeAtIndex($className, $index);
 
-        if (!class_exists($constructorParameterType)) {
-            throw new OutOfRangeException('Class does not exist or is not a class.');
+        if (!class_exists($constructorParameterType, true) && !interface_exists($constructorParameterType, true)) {
+            // Not class nor interface
+            throw new OutOfRangeException('Class or interface has not been defined.');
         }
 
         return $this->getReflectionClass($constructorParameterType);
