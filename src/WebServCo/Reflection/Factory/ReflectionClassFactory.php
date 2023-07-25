@@ -17,7 +17,7 @@ final class ReflectionClassFactory implements ReflectionClassFactoryInterface
      */
     public function createReflectionClass(string $className): ReflectionClass
     {
-        if (!class_exists($className)) {
+        if (!class_exists($className, true)) {
             throw new OutOfRangeException('Class does not exist.');
         }
 
