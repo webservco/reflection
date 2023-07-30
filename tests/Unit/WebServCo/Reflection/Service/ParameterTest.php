@@ -24,30 +24,33 @@ final class ParameterTest extends AbstractReflectionServiceTester
     {
         assert($this->reflectionService instanceof ReflectionServiceInterface);
 
-        self::assertEquals(
-            'dependency',
-            $this->reflectionService->getConstructorParameterAtIndex(self::CLASS_NAME, 1)->getName(),
-        );
+        $constructorParameter = $this->reflectionService->getConstructorParameterAtIndex(self::CLASS_NAME, 1);
+
+        self::assertFalse($constructorParameter->allowsNull());
+
+        self::assertEquals('dependency', $constructorParameter->getName());
     }
 
     public function testConstructorParameterAtIndex2(): void
     {
         assert($this->reflectionService instanceof ReflectionServiceInterface);
 
-        self::assertEquals(
-            'pdo',
-            $this->reflectionService->getConstructorParameterAtIndex(self::CLASS_NAME, 2)->getName(),
-        );
+        $constructorParameter = $this->reflectionService->getConstructorParameterAtIndex(self::CLASS_NAME, 2);
+
+        self::assertFalse($constructorParameter->allowsNull());
+
+        self::assertEquals('pdo', $constructorParameter->getName());
     }
 
     public function testConstructorParameterAtIndex3(): void
     {
         assert($this->reflectionService instanceof ReflectionServiceInterface);
 
-        self::assertEquals(
-            'string',
-            $this->reflectionService->getConstructorParameterAtIndex(self::CLASS_NAME, 3)->getName(),
-        );
+        $constructorParameter = $this->reflectionService->getConstructorParameterAtIndex(self::CLASS_NAME, 3);
+
+        self::assertTrue($constructorParameter->allowsNull());
+
+        self::assertEquals('string', $constructorParameter->getName());
     }
 
     public function testConstructorParameterAtIndex4ThrowsException(): void

@@ -8,7 +8,7 @@ use PDO;
 
 final class MockController
 {
-    public function __construct(private MockDependency $dependency, private PDO $pdo, private string $string)
+    public function __construct(private MockDependency $dependency, private PDO $pdo, private ?string $string)
     {
     }
 
@@ -22,7 +22,7 @@ final class MockController
         return $this->pdo;
     }
 
-    public function getString(): string
+    public function getString(): ?string
     {
         return $this->string;
     }
