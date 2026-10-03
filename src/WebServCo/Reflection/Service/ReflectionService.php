@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Reflection\Service;
 
 use OutOfBoundsException;
+use Override;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionNamedType;
@@ -31,6 +32,7 @@ final class ReflectionService implements ReflectionServiceInterface
     {
     }
 
+    #[Override]
     public function getConstructor(string $className): ReflectionMethod
     {
         $constructor = $this->getReflectionClass($className)->getConstructor();
@@ -41,6 +43,7 @@ final class ReflectionService implements ReflectionServiceInterface
         return $constructor;
     }
 
+    #[Override]
     public function getConstructorParameterAtIndex(string $className, int $index): ReflectionParameter
     {
         $constructor = $this->getConstructor($className);
@@ -60,6 +63,7 @@ final class ReflectionService implements ReflectionServiceInterface
     /**
      * @return \ReflectionClass<object>
      */
+    #[Override]
     public function getConstructorParameterReflectionClassAtIndex(string $className, int $index): ReflectionClass
     {
         $constructorParameterType = $this->getConstructorParameterTypeAtIndex($className, $index);
@@ -67,6 +71,7 @@ final class ReflectionService implements ReflectionServiceInterface
         return $this->getReflectionClass($constructorParameterType);
     }
 
+    #[Override]
     public function getConstructorParameterTypeAtIndex(string $className, int $index): string
     {
         $reflectionParameter = $this->getConstructorParameterAtIndex($className, $index);
@@ -81,6 +86,7 @@ final class ReflectionService implements ReflectionServiceInterface
     /**
      * @return \ReflectionClass<object>
      */
+    #[Override]
     public function getReflectionClass(string $className): ReflectionClass
     {
         if (!array_key_exists($className, $this->reflectionClasses)) {

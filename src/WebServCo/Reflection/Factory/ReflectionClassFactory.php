@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Reflection\Factory;
 
 use OutOfRangeException;
+use Override;
 use ReflectionClass;
 use WebServCo\Reflection\Contract\ReflectionClassFactoryInterface;
 
@@ -16,6 +17,7 @@ final class ReflectionClassFactory implements ReflectionClassFactoryInterface
     /**
      * @return \ReflectionClass<object>
      */
+    #[Override]
     public function createReflectionClass(string $className): ReflectionClass
     {
         if (!class_exists($className, true) && !interface_exists($className, true)) {
