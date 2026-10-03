@@ -13,7 +13,7 @@ use WebServCo\Reflection\Service\ReflectionService;
 
 abstract class AbstractReflectionServiceTester extends TestCase
 {
-    protected const CLASS_NAME = MockController::class;
+    protected const string CLASS_NAME = MockController::class;
 
     protected ?ReflectionServiceInterface $reflectionService = null;
 
